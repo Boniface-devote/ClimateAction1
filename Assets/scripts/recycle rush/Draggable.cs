@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -29,7 +30,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Convert screen position to world position directly for smoother tracking
         Vector3 worldPoint;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(
             panelRectTransform,
@@ -38,12 +38,32 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             out worldPoint
         );
 
-        // Update position to follow cursor smoothly
         transform.position = new Vector3(worldPoint.x, worldPoint.y, transform.position.z);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         rb.isKinematic = false;
+    }
+
+    public void ReturnToStart()
+    {
+        StartCoroutine(BounceBack());
+    }
+
+    private IEnumerator BounceBack()
+    {
+        float duration = 0.25f;
+        float elapsed = 0f;
+        Vector3 originalPos = transform.position;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(originalPos, startPos, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = startPos;
     }
 }

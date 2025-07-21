@@ -7,6 +7,10 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
     public int score = 0;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreText2;
+    public int items = 0;
+    public TextMeshProUGUI itemText;
+    public TextMeshProUGUI itemText2;
 
     private void Awake()
     {
@@ -18,7 +22,8 @@ public class ScoreManager : MonoBehaviour
 
     public void AddPoint()
     {
-        score++;
+        score=score+10;
+        items++;
         UpdateScoreDisplay();
     }
 
@@ -26,5 +31,9 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText != null)
             scoreText.text = score.ToString();
+            scoreText2.text = score.ToString();
+            //scoreText.color = Color.white;
+            itemText.text = items.ToString();
+            itemText2.text = items.ToString();
     }
 }

@@ -1,20 +1,53 @@
 using UnityEngine;
+using System.Collections;
 
 public class BinScript : MonoBehaviour
 {
-    public string acceptedTag; // E.g., "Plastic", "Paper", etc.
+    public string[] acceptedTags; // Array to hold multiple accepted tags
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(acceptedTag))
+        Draggable draggable = other.GetComponent<Draggable>();
+        if (draggable == null) return;
+
+        // Check if the object's tag is in the list of accepted tags
+        if (IsTagAccepted(other.tag))
         {
-            Destroy(other.gameObject); // Dispose of the trash
-            ScoreManager.Instance.AddPoint(); // Add point to score
+            // Play correct disposal animation before destroying
+            StartCoroutine(PlayDisposeAnimation(other.gameObject));
+            ScoreManager.Instance.AddPoint();
         }
-        else if (other.CompareTag("Trash")) // generic trash item with wrong tag
+        else
         {
-            // Optionally penalize or play an error sound
-            Debug.Log("Wrong bin!");
+            // Incorrect bin – return to start position
+            draggable.ReturnToStart();
         }
+    }
+
+    private bool IsTagAccepted(string tagToCheck)
+    {
+        foreach (string tag in acceptedTags)
+        {
+            if (tagToCheck == tag)
+                return true;
+        }
+        return false;
+    }
+
+    private IEnumerator PlayDisposeAnimation(GameObject obj)
+    {
+        float duration = 0.2f;
+        Vector3 originalScale = obj.transform.localScale;
+        Vector3 targetScale = Vector3.zero;
+
+        float time = 0;
+        while (time < duration)
+        {
+            obj.transform.localScale = Vector3.Lerp(originalScale, targetScale, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(obj);
     }
 }

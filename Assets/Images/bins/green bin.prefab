@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1760947765559100612}
   - component: {fileID: 937865950251186791}
   - component: {fileID: 4822186240336783723}
+  - component: {fileID: 7256792585289257850}
   m_Layer: 5
   m_Name: green bin
-  m_TagString: Untagged
+  m_TagString: Organic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +107,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -120,5 +121,19 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 180, y: 180}
   m_EdgeRadius: 0
+--- !u!114 &7256792585289257850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7989166266799639073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8b1c9ac20f86248ae5e99a7c9d28c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceptedTags:
+  - Organic

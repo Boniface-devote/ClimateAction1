@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Paper
   - Plastic
+  - Hazardous
+  - Metal
+  - Glass
+  - Organic
   layers:
   - Default
   - TransparentFX
