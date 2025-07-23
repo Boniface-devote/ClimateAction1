@@ -13,12 +13,14 @@ public class BinScript : MonoBehaviour
         // Check if the object's tag is in the list of accepted tags
         if (IsTagAccepted(other.tag))
         {
+            SoundManager.Instance.PlaySuccess();
             // Play correct disposal animation before destroying
             StartCoroutine(PlayDisposeAnimation(other.gameObject));
             ScoreManager.Instance.AddPoint();
         }
         else
         {
+            SoundManager.Instance.PlayWrong();
             // Incorrect bin – return to start position
             draggable.ReturnToStart();
         }

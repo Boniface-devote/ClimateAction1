@@ -42,6 +42,7 @@ public class GameTimer : MonoBehaviour
     {
         isGameOver = true;
         Time.timeScale = 0f; // Pause game
+        SoundManager.Instance.PlayGameOver();
         gameOverPanel.SetActive(true);
     }
 }
