@@ -17,6 +17,7 @@ public class BinScript : MonoBehaviour
             // Play correct disposal animation before destroying
             StartCoroutine(PlayDisposeAnimation(other.gameObject));
             ScoreManager.Instance.AddPoint();
+            DisposalTracker.Instance.RecordDisposal(other.tag); // 
         }
         else
         {

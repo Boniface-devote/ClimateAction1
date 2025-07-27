@@ -8,6 +8,8 @@ public class GameTimer : MonoBehaviour
 
     public TextMeshProUGUI timerText;
     public GameObject gameOverPanel;
+    public TextMeshProUGUI summaryText; // Link this in Inspector
+
 
     private bool isGameOver = false;
 
@@ -44,5 +46,20 @@ public class GameTimer : MonoBehaviour
         Time.timeScale = 0f; // Pause game
         SoundManager.Instance.PlayGameOver();
         gameOverPanel.SetActive(true);
+        ShowDisposalSummary();
     }
+    void ShowDisposalSummary()
+    {
+        var summary = DisposalTracker.Instance.GetDisposalSummary();
+
+        string result = "Disposal Summary:\n";
+        foreach (var entry in summary)
+        {
+            result += $"{entry.Key}: {entry.Value}\n";
+        }
+
+        if (summaryText != null)
+            summaryText.text = result;
+    }
+
 }
