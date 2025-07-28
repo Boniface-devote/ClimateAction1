@@ -50,6 +50,7 @@ public class GameTimer : MonoBehaviour
         SoundManager.Instance.PlayGameOver();
         gameOverPanel.SetActive(true);
         ShowDisposalSummary();
+        ScoreManager.Instance.ViewPrefs();
     }
 
     void ShowDisposalSummary()
@@ -72,38 +73,91 @@ public class GameTimer : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(5f); // Wait 5 seconds
 
-        // Step 1: Find the highest category
         var highest = summary.OrderByDescending(x => x.Value).FirstOrDefault();
         string topCategory = highest.Key;
 
-        // Step 2: Create a prompt to send to AI
-        string aiPrompt = $"Based on the summary, please create a short and simple educational message (for children aged 6–12 in Africa) that explains the importance of sorting the type of rubbish that is highest: {topCategory}.";
+        string prompt = $"Based on the summary, please create a short and simple educational message(48 words) for children aged 6ï¿½12 in Africa that explains the importance of sorting the type of rubbish that is highest: {topCategory}.";
 
-        // Step 3: (Placeholder) Simulate AI response — replace this with your actual AI call
-        string generatedMessage = GenerateEducationalMessageMock(topCategory);
-
-        // Step 4: Display the message
-        if (aiMessageText != null)
-            aiMessageText.text = generatedMessage;
+        yield return StartCoroutine(SendPromptToGemini(prompt));
     }
 
-    // TEMPORARY MOCK - Replace this with actual AI call logic (e.g., API)
-    string GenerateEducationalMessageMock(string category)
+    IEnumerator SendPromptToGemini(string prompt)
     {
-        switch (category.ToLower())
+        string apiKey = "AIzaSyByKlUcYPfpHElSj3Lj1B89xBs1EMv0CzQ";
+        string url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={apiKey}";
+
+        string jsonPayload = JsonUtility.ToJson(new GeminiRequest
         {
-            case "plastic":
-                return "Great job sorting plastic! Plastic can harm animals and block drains. When we recycle it, we keep our environment clean and safe!";
-            case "organic":
-                return "Well done on sorting organic waste! Things like food scraps can become compost to help plants grow. That means more gardens and fresh food!";
-            case "glass":
-                return "Awesome work with glass! Glass can be melted and reused. Recycling it saves energy and keeps sharp pieces off the ground.";
-            case "paper":
-                return "Paper recycling saves trees and forests. The more you sort paper, the more we protect places where animals live!";
-            case "hazardous":
-                return "Sorting hazardous waste like batteries helps protect people and nature. These things must go to special places to stay safe!";
-            default:
-                return $"You're doing a great job sorting {category} waste! Keep being an Eco Hero!";
+            contents = new GeminiContent[]
+            {
+            new GeminiContent
+            {
+                parts = new GeminiPart[]
+                {
+                    new GeminiPart { text = prompt }
+                }
+            }
+            }
+        });
+
+        using (UnityEngine.Networking.UnityWebRequest request = UnityEngine.Networking.UnityWebRequest.PostWwwForm(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
+            request.uploadHandler = new UnityEngine.Networking.UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new UnityEngine.Networking.DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+            {
+                GeminiResponse response = JsonUtility.FromJson<GeminiResponse>(request.downloadHandler.text);
+                string output = response?.candidates?[0]?.content?.parts?[0]?.text;
+
+                if (!string.IsNullOrEmpty(output) && aiMessageText != null)
+                {
+                    aiMessageText.text = output;
+                }
+                else
+                {
+                    aiMessageText.text = "Could not generate message. Please try Again later";
+                }
+            }
+            else
+            {
+                Debug.LogError("Gemini API Error: " + request.error);
+                aiMessageText.text = "Failed to get AI message.AI currenty Unaccessible";
+            }
         }
     }
+
+}
+[System.Serializable]
+public class GeminiRequest
+{
+    public GeminiContent[] contents;
+}
+
+[System.Serializable]
+public class GeminiContent
+{
+    public GeminiPart[] parts;
+}
+
+[System.Serializable]
+public class GeminiPart
+{
+    public string text;
+}
+
+[System.Serializable]
+public class GeminiResponse
+{
+    public GeminiCandidate[] candidates;
+}
+
+[System.Serializable]
+public class GeminiCandidate
+{
+    public GeminiContent content;
 }

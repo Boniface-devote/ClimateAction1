@@ -7,6 +7,8 @@ public class GameOverUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PlayerPrefs.DeleteKey("PlayerScore");
+
     }
 
     public void QuitGame()

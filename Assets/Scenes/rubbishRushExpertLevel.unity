@@ -216,8 +216,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1127,6 +1127,7 @@ MonoBehaviour:
   timerText: {fileID: 1332109036}
   gameOverPanel: {fileID: 266986151}
   summaryText: {fileID: 130359968}
+  aiMessageText: {fileID: 130359968}
 --- !u!114 &604920673
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro; // For TMP_InputField
 
 public class MainMenu : MonoBehaviour
 {
@@ -8,59 +9,95 @@ public class MainMenu : MonoBehaviour
     public GameObject LevelSelectorPanel;
     public GameObject SoundsettingsPanel;
     public GameObject MainPanel;
-   
+    public GameObject RegistrationPanel;
 
-    // Called when the Play button is clicked
+    public TMP_InputField nameInputField; // Link in Inspector
+
+    private const string UsernameKey = "PlayerName";
+
+    void Start()
+    {
+        // Check if the player is already registered
+        if (PlayerPrefs.HasKey(UsernameKey))
+        {
+            RegistrationPanel.SetActive(false);
+            MainPanel.SetActive(true);
+        }
+        else
+        {
+            RegistrationPanel.SetActive(true);
+            MainPanel.SetActive(false);
+        }
+
+        // Hide all other panels at start
+        scoreBoardPanel.SetActive(false);
+        HowtoPlayPanel.SetActive(false);
+        LevelSelectorPanel.SetActive(false);
+        SoundsettingsPanel.SetActive(false);
+    }
+
+    public void RegisterPlayer()
+    {
+        string playerName = nameInputField.text.Trim();
+
+        if (!string.IsNullOrEmpty(playerName))
+        {
+            PlayerPrefs.SetString(UsernameKey, playerName);
+            PlayerPrefs.Save();
+
+            RegistrationPanel.SetActive(false);
+            MainPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Name field is empty!");
+        }
+    }
+
     public void PlayGame()
     {
         SceneManager.LoadScene("rubbishRushBeginnerLevel");
     }
+
     public void OnClickScoreBoardButton()
     {
-        scoreBoardPanel.SetActive(true);
-        MainPanel.SetActive(false);
-        HowtoPlayPanel.SetActive(false);
-        LevelSelectorPanel.SetActive(false);
-        SoundsettingsPanel.SetActive(false);
-    }
-    public void OnClickHowtoPlayButton()
-    {
-        scoreBoardPanel.SetActive(false);
-        MainPanel.SetActive(false);
-        HowtoPlayPanel.SetActive(true);
-        LevelSelectorPanel.SetActive(false);
-        SoundsettingsPanel.SetActive(false);
-    }
-    public void OnClickLevelSelectorButton()
-    {
-        scoreBoardPanel.SetActive(false);
-        MainPanel.SetActive(false);
-        HowtoPlayPanel.SetActive(false);
-        LevelSelectorPanel.SetActive(true);
-        SoundsettingsPanel.SetActive(false);
-    }
-    public void OnClickBackButton()
-    {
-        scoreBoardPanel.SetActive(false);
-        MainPanel.SetActive(true);
-        HowtoPlayPanel.SetActive(false);
-        LevelSelectorPanel.SetActive(false);
-        SoundsettingsPanel.SetActive(false);
-    }
-    public void OnClickSoundSettingsButton()
-    {
-        scoreBoardPanel.SetActive(false);
-        MainPanel.SetActive(false);
-        HowtoPlayPanel.SetActive(false);
-        LevelSelectorPanel.SetActive(false);
-        SoundsettingsPanel.SetActive(true);
+        ShowOnly(scoreBoardPanel);
     }
 
-    // Called when the Exit button is clicked
+    public void OnClickHowtoPlayButton()
+    {
+        ShowOnly(HowtoPlayPanel);
+    }
+
+    public void OnClickLevelSelectorButton()
+    {
+        ShowOnly(LevelSelectorPanel);
+    }
+
+    public void OnClickSoundSettingsButton()
+    {
+        ShowOnly(SoundsettingsPanel);
+    }
+
+    public void OnClickBackButton()
+    {
+        ShowOnly(MainPanel);
+    }
+
     public void ExitGame()
     {
         Debug.Log("Exiting game...");
         Application.Quit();
     }
 
+    private void ShowOnly(GameObject panelToShow)
+    {
+        scoreBoardPanel.SetActive(false);
+        HowtoPlayPanel.SetActive(false);
+        LevelSelectorPanel.SetActive(false);
+        SoundsettingsPanel.SetActive(false);
+        MainPanel.SetActive(false);
+
+        panelToShow.SetActive(true);
+    }
 }
