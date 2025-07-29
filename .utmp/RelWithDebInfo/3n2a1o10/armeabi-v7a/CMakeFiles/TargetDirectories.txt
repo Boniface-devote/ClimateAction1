@@ -1,0 +1,5 @@
+D:/Projects/ClimateAction1/.utmp/RelWithDebInfo/3n2a1o10/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Projects/ClimateAction1/.utmp/RelWithDebInfo/3n2a1o10/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+D:/Projects/ClimateAction1/.utmp/RelWithDebInfo/3n2a1o10/armeabi-v7a/GameActivity/CMakeFiles/game.dir
+D:/Projects/ClimateAction1/.utmp/RelWithDebInfo/3n2a1o10/armeabi-v7a/GameActivity/CMakeFiles/edit_cache.dir
+D:/Projects/ClimateAction1/.utmp/RelWithDebInfo/3n2a1o10/armeabi-v7a/GameActivity/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,10 @@
+# ninja log v5
+45	2215	7754876246864351	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	9f9ea0f69f3c1b82
+36	2241	7754876247161361	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	262a9d60f1d12746
+19	2285	7754876247608237	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	20118354ca8cf718
+55	2324	7754876248015921	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c8d46758121dd602
+10	2371	7754876248502971	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	20943cff5e6adc2a
+66	2506	7754876249827980	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	99cb6031d2a8fe37
+27	2663	7754876251401392	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	cd1fcf6fed557a8b
+1	2780	7754876252581011	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	1f2c0c0261bf1b1e
+2781	2874	7754876253569818	D:/Projects/ClimateAction1/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3n2a1o10/obj/armeabi-v7a/libgame.so	64d1634a47a4ff6b

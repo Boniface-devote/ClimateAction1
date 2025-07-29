@@ -30,7 +30,7 @@ public class ScoreManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        PlayerPrefs.DeleteKey(ScoreKey);
         score = PlayerPrefs.GetInt(ScoreKey, 0);
         StoreSceneIndex();
     }
