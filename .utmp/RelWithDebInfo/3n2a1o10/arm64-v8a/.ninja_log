@@ -1,10 +1,19 @@
 # ninja log v5
 54	3397	7754876175474949	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	39705bd2bc9e7a7c
 32	3413	7754876175537752	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a31430ccb6afc7e9
-12	3463	7754876176285665	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	68ec4b43e445f72e
-80	3471	7754876176438454	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	a95be5fa15edea45
-1	3612	7754876177805555	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	82e24cc1699280db
 68	4126	7754876182939360	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	ea3dea09d0c95a52
+12	3463	7754876176285665	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	68ec4b43e445f72e
+4569	4787	7754876189632965	D:/Projects/ClimateAction1/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3n2a1o10/obj/arm64-v8a/libgame.so	49357b75107fd436
+1	3612	7754876177805555	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	82e24cc1699280db
+80	3471	7754876176438454	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	a95be5fa15edea45
 43	4221	7754876183820580	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	ea5ff58eff934c57
 21	4568	7754876187302451	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	c546c44fa1ae1e9b
-4569	4787	7754876189632965	D:/Projects/ClimateAction1/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3n2a1o10/obj/arm64-v8a/libgame.so	49357b75107fd436
+187	5288	7755168157999014	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	39705bd2bc9e7a7c
+102	5333	7755168158292851	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a31430ccb6afc7e9
+157	5430	7755168159349998	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	a95be5fa15edea45
+114	5452	7755168159602749	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	68ec4b43e445f72e
+129	5713	7755168162098384	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	82e24cc1699280db
+172	6215	7755168167312423	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	ea3dea09d0c95a52
+143	6473	7755168169393012	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	ea5ff58eff934c57
+24	6895	7755168174033795	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	c546c44fa1ae1e9b
+6896	7187	7755168177054562	D:/Projects/ClimateAction1/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3n2a1o10/obj/arm64-v8a/libgame.so	49357b75107fd436

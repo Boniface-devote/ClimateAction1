@@ -77,29 +77,69 @@ public class ScoreManager : MonoBehaviour
 
         Debug.Log($"PlayerPrefs Saved:\nUsername: {username}\nScore: {savedScore}\nScene Index (Level): {sceneIndex}");
 
-        StartCoroutine(UploadDataToSupabase(username, savedScore, sceneIndex));
+        StartCoroutine(CheckAndUpdateScore(username, savedScore, sceneIndex));
     }
 
-    IEnumerator UploadDataToSupabase(string username, int score, int sceneIndex)
+    IEnumerator CheckAndUpdateScore(string username, int currentScore, int sceneIndex)
     {
-        string url = $"{SUPABASE_URL}/rest/v1/player_scores";
-        string json = $"{{\"username\":\"{username}\",\"score\":{score},\"scene_index\":{sceneIndex}}}";
+        string url = $"{SUPABASE_URL}/rest/v1/player_scores?username=eq.{username}&select=score";
 
-        UnityWebRequest request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new DownloadHandlerBuffer();
+        UnityWebRequest getRequest = UnityWebRequest.Get(url);
+        getRequest.SetRequestHeader("apikey", SUPABASE_API_KEY);
+        getRequest.SetRequestHeader("Authorization", $"Bearer {SUPABASE_API_KEY}");
 
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("apikey", SUPABASE_API_KEY);
-        request.SetRequestHeader("Authorization", $"Bearer {SUPABASE_API_KEY}");
-        request.SetRequestHeader("Prefer", "return=minimal");
+        yield return getRequest.SendWebRequest();
 
-        yield return request.SendWebRequest();
+        if (getRequest.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Error fetching existing score: {getRequest.error}\n{getRequest.downloadHandler.text}");
+            yield break;
+        }
 
-        if (request.result != UnityWebRequest.Result.Success)
-            Debug.LogError($"Error uploading to Supabase: {request.error}\n{request.downloadHandler.text}");
+        int storedScore = -1;
+        string response = getRequest.downloadHandler.text;
+        if (!string.IsNullOrEmpty(response) && response != "[]")
+        {
+            // Response format: [{"score": 100}]
+            string trimmed = response.Trim('[', ']');
+            if (trimmed.Contains("score"))
+            {
+                var scoreStr = trimmed.Split(':')[1].Trim(' ', '}');
+                int.TryParse(scoreStr, out storedScore);
+            }
+        }
+
+        if (currentScore > storedScore)
+        {
+            Debug.Log($"New high score! Updating Supabase. Old: {storedScore}, New: {currentScore}");
+            StartCoroutine(UpdateSupabaseScore(username, currentScore, sceneIndex));
+        }
         else
-            Debug.Log("Score data uploaded to Supabase!");
+        {
+            Debug.Log($"No update needed. Existing score: {storedScore}, Current score: {currentScore}");
+        }
+    }
+
+    IEnumerator UpdateSupabaseScore(string username, int score, int sceneIndex)
+    {
+        string url = $"{SUPABASE_URL}/rest/v1/player_scores?username=eq.{username}";
+        string json = $"{{\"score\":{score},\"scene_index\":{sceneIndex}}}";
+
+        UnityWebRequest patchRequest = new UnityWebRequest(url, "PATCH");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+        patchRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        patchRequest.downloadHandler = new DownloadHandlerBuffer();
+
+        patchRequest.SetRequestHeader("Content-Type", "application/json");
+        patchRequest.SetRequestHeader("apikey", SUPABASE_API_KEY);
+        patchRequest.SetRequestHeader("Authorization", $"Bearer {SUPABASE_API_KEY}");
+        patchRequest.SetRequestHeader("Prefer", "return=minimal");
+
+        yield return patchRequest.SendWebRequest();
+
+        if (patchRequest.result != UnityWebRequest.Result.Success)
+            Debug.LogError($"Error updating score: {patchRequest.error}\n{patchRequest.downloadHandler.text}");
+        else
+            Debug.Log("Supabase score updated successfully.");
     }
 }

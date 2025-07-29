@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SupabaseConnectionChecker : MonoBehaviour
 {
