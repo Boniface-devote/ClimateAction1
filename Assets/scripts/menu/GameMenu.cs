@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject SoundsettingsPanel;
     public GameObject MainPanel;
     public GameObject RegistrationPanel;
+    public GameObject UploadPanel;
 
     public TMP_InputField nameInputField; // Link in Inspector
 
@@ -34,6 +35,7 @@ public class MainMenu : MonoBehaviour
         HowtoPlayPanel.SetActive(false);
         LevelSelectorPanel.SetActive(false);
         SoundsettingsPanel.SetActive(false);
+        UploadPanel.SetActive(false);
     }
 
     public void RegisterPlayer()
@@ -73,6 +75,10 @@ public class MainMenu : MonoBehaviour
     {
         ShowOnly(LevelSelectorPanel);
     }
+    public void OnClickLevelUploadButton()
+    {
+        ShowOnly(UploadPanel);
+    }
 
     public void OnClickSoundSettingsButton()
     {
@@ -97,6 +103,8 @@ public class MainMenu : MonoBehaviour
         LevelSelectorPanel.SetActive(false);
         SoundsettingsPanel.SetActive(false);
         MainPanel.SetActive(false);
+        UploadPanel.SetActive(false);
+
 
         panelToShow.SetActive(true);
     }
